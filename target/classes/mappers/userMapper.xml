@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.gondr.mappers.UserMapper">
+	<insert id="insertUser">
+		INSERT INTO spring_users (userid, name, password, exp, level, img) 
+		VALUES ( #{userid}, #{name}, PASSWORD(#{password}), 0, 1, #{img})
+	</insert>
+	
+	<select id="selectUser" resultType="UserVO">
+		SELECT * FROM spring_users WHERE userid = #{userid}
+	</select>
+	
+	<select id="loginUser" resultType="UserVO">
+		SELECT * FROM spring_users 
+		WHERE userid = #{userid} AND password = PASSWORD(#{password})
+	</select>
+	
+	<update id="expUp">
+		UPDATE spring_users SET exp = exp + 5 WHERE userid = #{userid}
+	</update>
+	
+	<select id="selectExp" resultType="int">
+		SELECT exp FROM level where level = #{level}
+	</select>
+	
+	<update id="updateUser">
+		UPDATE spring_users SET exp = 0, level = level + 1 WHERE userid = #{userid}
+	</update>
+</mapper>
